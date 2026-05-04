@@ -11,9 +11,13 @@ async function fetchPerson(id: string): Promise<PersonType> {
 	return await res.json();
 }
 
-export async function GET(_req: NextRequest, ctx: RouteContext<"/person/[id]">) {
-	const { id } = await ctx.params;
+export async function GET(
+    _req: Request, 
+    { params }: { params: Promise<{ id: string }> }
+) {
+    const { id } = await params;
     const person = await fetchPerson(id);
-
-	return Response.json(person);
+    
+    // ကျန်တဲ့ code တွေ ဆက်ရေးပါ...
+    return Response.json(person);
 }
